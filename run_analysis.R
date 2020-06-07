@@ -53,7 +53,7 @@ library(dplyr)
   
    datasummary <-tibble(aggregate(join, by = list(join$subjectId, join$V2), FUN=mean, na.rm=TRUE))
    datasummary <- rename(datasummary, subjectID = Group.1, activityName = Group.2)
-   datasummary <- select(datasummary, -subjectId, -V2)
+   datasummary <- select(datasummary, -subjectId,-activityId, -V2)
   
    write.table(datasummary, "dataset_clean.txt", row.names = FALSE)
    
