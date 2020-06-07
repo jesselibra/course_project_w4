@@ -44,14 +44,16 @@ library(dplyr)
   
 ## 3. Uses descriptive activity names to name the activities in the data set
   join <- inner_join(datasetms, activityLbs, by = c("activityId" = "V1"))
-  join <- rename(join, activity = V2)
+
 
 ## 4. Appropriately labels the data set with descriptive variable names, done in #1.
   
   
 ## 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
   
-   datasummary <-tibble(aggregate(join, by = list(join$subjectId, join$activity), FUN=mean, na.rm=TRUE))
+   datasummary <-tibble(aggregate(join, by = list(join$subjectId, join$V2), FUN=mean, na.rm=TRUE))
+   datasummary <- rename(datasummary, subjectID = Group.1, activityName = Group.2)
+   datasummary <- select(datasummary, -subjectId, -V2)
   
    write.table(datasummary, "dataset_clean.txt", row.names = FALSE)
    
